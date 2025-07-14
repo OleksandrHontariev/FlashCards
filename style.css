@@ -1,0 +1,78 @@
+.sidebar-h4 {
+	margin-top: 14px;
+	font-weight: normal;
+	font-size: 18px;
+	color: #8f8f8f;
+	font-family: ui-sans-serif, -apple-system, system-ui, Segoe UI, Helvetica, Apple Color Emoji, Arial, sans-serif, Segoe UI Emoji, Segoe UI Symbol;
+}
+
+.sidebar-bg {
+	background: #F9F9F9;
+	box-shadow: 1px 0 0 0 #EDEDED;
+}
+
+	.sidebar-item {
+		text-decoration: none;
+		color: #111;
+		margin: 0!important;
+		padding: 0 12px;
+		background: transparent;
+		border-radius: 10px;
+	}
+
+	.sidebar-item:hover,
+	.sidebar-item.active,
+	.btn_click_active
+	 {
+		background: #EAEAEA;
+	}
+
+	.a-text {
+		padding: 4px 0;
+	}
+
+	.sidebar-item {
+		cursor: pointer;
+	}
+
+	.sidebar-item .sidebar-btn {
+	  display: none;
+	  padding: 0;
+	}
+
+	.sidebar-item .sidebar-btn:active {
+		display: inline-block;
+	}
+
+	.sidebar-btn i {
+		font-size: 20px;
+	}
+
+	.sidebar-btn:active {
+		outline: none;
+	}
+
+	.sidebar-item:hover .sidebar-btn,
+	.sidebar-item.active .sidebar-btn,
+	.btn_click_active .sidebar-btn {
+	  display: block;
+	}
+
+	.app-title {
+		margin: 0;
+		padding: 50px 0;
+		padding-top: 26px;
+	}
+
+	.navigation-wrapper .next-btn {
+		font-size: 40px;
+	}
+
+	#show-hint {
+		padding: 0;
+		margin-bottom: 5px;
+	}
+
+	#show-hint i {
+		font-size: 24px;
+	}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Карточки английского</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+	<link href="style.css" rel="stylesheet" />
+</head>
+<body class="d-flex flex-column">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+		    <div class="container">
+		        <!-- Логотип -->
+		        <a class="navbar-brand fw-bold" href="#">
+		        	FlashCards
+		        </a>
+		        <!-- Кнопка для мобилки -->
+		        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+		          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		          <span class="navbar-toggler-icon"></span>
+		        </button>
+		        <!-- Ссылки -->
+		        <div class="collapse navbar-collapse" id="navbarNav">
+		          <ul class="navbar-nav ms-auto">
+		            <li class="nav-item">
+		              <a class="nav-link active" aria-current="page" href="#">Главная</a>
+		            </li>
+		            <li class="nav-item">
+		              <a class="nav-link" href="#">Карточка слов</a>
+		            </li>
+		            <li class="nav-item">
+		              <a class="nav-link" href="#">Отблагодарить</a>
+		            </li>
+		          </ul>
+		        </div>
+		    </div>
+		</nav>
+	<main class="flex-fill">
+		<div class="modal fade modal-sm" id="renameDictionary" tabindex="-1" aria-labelledby="renameDictionary" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h1 class="modal-title fs-5" id="exampleModalLabel">Переименовать словарь</h1>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		      	<input type="hidden" class="dictionary-id" />
+		      	<div class="form-group">
+		      		<input class="dictionary-name form-control form-control-sm" />
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Отмена</button>
+		        <button type="button" class="btn btn-primary btn-sm btn-rename">Сохранить</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="modal fade modal-sm" id="removeDictionary" tabindex="-1" aria-labelledby="removeModal" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h1 class="modal-title fs-5" id="exampleModalLabel">Удалить словарь</h1>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		      	<input type="hidden" class="dictionary-id" />
+		      	<span>Вы действительно хотите удалить словарь?</span>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Отмена</button>
+		        <button type="button" class="btn btn-danger btn-sm btn-remove">Удалить</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="modal fade modal-sm" id="hintModal" tabindex="-1" aria-labelledby="hintModal" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h1 class="modal-title fs-5" id="exampleModalLabel">Hint</h1>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		      	<input type="hidden" class="dictionary-id" />
+		      	<span class="hint-text"></span>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Отмена</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="container-fluid h-100">
+			<div class="row h-100">
+				<aside class="col-3 overflow-y-auto h-100 sidebar-bg pe-2">
+					<div class="list-of-dictionaries">
+						<h4 class="sidebar-h4">Dictionaries</h4>
+						<ul class="dict-list list-unstyled">
+						</ul>
+					</div>
+					<div class="file-section">
+						<h4 class="sidebar-h4">Upload excel file</h4>
+						<button id="trigger-load-excel" class="btn btn-sm btn-outline-dark w-100">
+							<i class="bi bi-upload"></i>
+							&nbsp;
+							Upload file
+							<span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+						</button>
+						<div style="height:0!important;overflow:hidden;">
+							<input style="visibility:hidden;" type="file" id="load_excel" accept=".xls, .xlsx">
+						</div>
+					</div>
+					<div>
+						<h4 class="sidebar-h4">Storage usage</h4>
+						<div>
+							<span id="storage_used"></span>MB of <span>5 MB used</span>
+						</div>
+					</div>
+				</aside>
+				<section class="col-9 overflow-y-auto h-100">
+					<div class="app-section d-none">
+						<div>
+							<div class="indicator">
+								<span class="current">0</span>/
+								<span class="success-count text-success">0</span>/
+								<span class="errors-count text-danger">0</span>/
+								<span class="total-count">0</span>	
+							</div>
+							<h1 class="app-title text-center">
+								<span class="txt"></span>
+								<button
+									data-bs-toggle="tooltip"
+									data-bs-placement="bottom"
+									title="For a hint, click the button"
+									type="button"
+									id="show-hint"
+									class="btn btn-lg bg-transparent">
+										<i class="bi bi-question-circle"></i>
+								</button>
+							</h1>
+							<div id="app_variants">
+							</div>
+							<div class="navigation-wrapper mt-5"></div>
+						</div>
+					</div>
+					<div class="dictionary-preview d-flex align-items-center h-100">
+						<div class="mx-auto text-center">
+							<i class="bi bi-book fs-1"></i>
+							<h4>To start select dictionary to learn</h4>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div> <!-- / container-fluid -->
+	</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+	<script src="scripts/constants.js"></script>
+	<script src="scripts/errorsIndicator.js"></script>
+	<script src="scripts/indicator.js"></script>
+	<script src="scripts/cardMaker.js"></script>
+	<script src="scripts/dictionaryStorage.js"></script>
+	<script src="scripts/app.js"></script>
+	<script>
+		function adjustMainHeight() {
+		  const header = document.querySelector('nav'); // твой navbar
+		  const main = document.querySelector('main');  // твой контейнер
+
+		  if (header && main) {
+		    const headerHeight = header.offsetHeight;
+		    const windowHeight = window.innerHeight;
+		    const mainHeight = windowHeight - headerHeight;
+
+		    main.style.height = mainHeight + 'px';
+		  }
+		}
+
+		// Запускаем при загрузке
+		window.addEventListener('load', adjustMainHeight);
+
+		// Запускаем при изменении размера окна
+		window.addEventListener('resize', adjustMainHeight);
+
+		document.addEventListener("click", function () {
+			let target = document.querySelector(".btn_click_active");
+			if (target !== null) {
+				target.classList.remove("btn_click_active");
+			}
+		});
+
+		document.getElementById("renameDictionary").addEventListener('shown.bs.modal', function () {
+		  document.querySelector(".dictionary-name").focus();
+		});
+	</script>
+</body>
+</html>
