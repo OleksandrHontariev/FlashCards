@@ -26,8 +26,10 @@
 
 				document.querySelector(`.item-${id}`).remove();
 
-				if (id === getActiveDictionary())
-					showPleaseSelectDictionary();
+				if (id === DictionaryStorage.getActiveDictionary()) {
+					DictionaryStorage.setActiveDictionary();
+					DictionaryStorage.showPleaseSelectDictionary();
+				}
 
 				hideModal(alertRemove);
 			});
@@ -98,16 +100,17 @@
 			}
 
 			this.printDictionaryList = function (dictionaryId) {
-				// clear old list
-				document.querySelector(".dict-list").innerHTML = "";
-
 				let data = this.getDictionaryList();
 				if (data !== null) {
 					data.forEach(function (item) {
-						let li = createDictionaryListItem(item.friendlyName, item.id, dictionaryId);
+						let li = createDictionaryListItem(item.friendlyName, item.id);
 						let ul = document.querySelector(".dict-list");
 						ul.appendChild(li);
 					});
+				}
+
+				if (dictionaryId) {
+					document.querySelector(`.dict-list .item-${dictionaryId} .sidebar-item`).classList.add("active");
 				}
 			};
 
@@ -118,14 +121,6 @@
 			function renameDictionaryFromSidebar (dictionaryId, friendlyName) {
 				let li = document.querySelector(`.item-${dictionaryId}`);
 				li.querySelector(".sidebar-item span").innerText = friendlyName;
-			}
-
-			function setActiveDictionary (dictionaryId) {
-				localStorage.setItem(activeKey, dictionaryId);
-			}
-
-			function getActiveDictionary () {
-				return localStorage.getItem(activeKey);
 			}
 
 			function downloadDictionary (id) {
@@ -213,9 +208,9 @@
 				a.addEventListener("click", function (e) {
 					clearActiveLink();
 					this.classList.add("active");
-					self.hidePleaseSelectDictionary();
+					DictionaryStorage.hidePleaseSelectDictionary();
 					let dId = this.dataset.id;
-					setActiveDictionary(dId);
+					DictionaryStorage.setActiveDictionary(dId);
 					let errorsIndicator = new ErrorsIndicator(dId);
 					indicator = new Indicator({
 						dictionaryId: dId,
@@ -322,18 +317,54 @@
 			function removeErrorsIndicator (dictionaryId) {
 				ErrorsIndicator.removeErrorsIndicator(dictionaryId);
 			}
+		}
 
-			function showPleaseSelectDictionary () {
-				document.querySelector(".app-section").classList.add("d-none");
-				document.querySelector(".dictionary-preview").classList.remove("d-none");
-			}
+		// static
+		DictionaryStorage.showPleaseSelectDictionary = function () {
+			document.querySelector(".app-section").classList.add("d-none");
+			document.querySelector(".dictionary-preview").classList.remove("d-none");
+		}
 
-			this.hidePleaseSelectDictionary = function () {
-				document.querySelector(".app-section").classList.remove("d-none");
-				document.querySelector(".dictionary-preview").classList.add("d-none");
-			}
+		DictionaryStorage.hidePleaseSelectDictionary = function () {
+			document.querySelector(".app-section").classList.remove("d-none");
+			document.querySelector(".dictionary-preview").classList.add("d-none");
 		}
 
 		DictionaryStorage.removeDictionary = function (dictionaryId) {
 			localStorage.removeItem(dictionaryId);
+		}
+
+		DictionaryStorage.setActiveDictionary = function (dictionaryId) {
+			if (dictionaryId) {
+				localStorage.setItem(activeKey, dictionaryId);	
+			} else {
+				localStorage.removeItem(activeKey);
+			}
+		}
+
+		DictionaryStorage.getActiveDictionary = function () {
+			return localStorage.getItem(activeKey);
+		}
+
+		DictionaryStorage.initActiveDictionary = function () {
+			let id = DictionaryStorage.getActiveDictionary();
+			if (id) {
+					DictionaryStorage.hidePleaseSelectDictionary();
+					let errorsIndicator = new ErrorsIndicator(id);
+					indicator = new Indicator({
+						dictionaryId: id,
+						errorsIndicator: errorsIndicator
+					});
+
+					indicator.printIndicator();
+					let cardMaker = new CardMaker({
+						dictionaryId: id,
+						questionIndex: 0,
+						answerIndex: 1,
+						sentenceExampleIndex: 2,
+						sentenceTranslationIndex: 3,
+						indicator: indicator,
+						errorsIndicator: errorsIndicator
+					});
+			}
 		}

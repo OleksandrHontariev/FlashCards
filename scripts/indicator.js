@@ -108,6 +108,7 @@
 			}
 		};
 
+		// static
 		Indicator.removeIndicator = function (dictionaryId) {
 			let data = localStorage.getItem(indicatorKey);
 			if (data !== null) {

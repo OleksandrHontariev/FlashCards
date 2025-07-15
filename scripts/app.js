@@ -1,7 +1,8 @@
 
 		document.addEventListener("DOMContentLoaded", function () {
 			let ds = new DictionaryStorage();
-			ds.printDictionaryList();
+			ds.printDictionaryList(DictionaryStorage.getActiveDictionary());
+			DictionaryStorage.initActiveDictionary();
 
 			document.getElementById("trigger-load-excel").addEventListener("click", function () {
 				document.getElementById("load_excel").click();	

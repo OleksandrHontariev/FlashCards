@@ -68,6 +68,7 @@
 			}
 		}
 
+		// static
 		ErrorsIndicator.removeErrorsIndicator = function (dictionaryId) {
 		    let list = JSON.parse(localStorage.getItem(errorsKey)) || [];
 		    let filtered = list.filter(i => i.dictionaryId !== dictionaryId);
