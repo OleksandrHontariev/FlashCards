@@ -24,14 +24,6 @@
 				};
 			}
 
-			this.removeIndicator = function (dictionaryId) {
-				let data = localStorage.getItem(indicatorKey);
-				if (data !== null) {
-					let toSave = JSON.parse(data).filter(i => i.dictionaryId != dictionaryId);
-					localStorage.setItem(indicatorKey, JSON.stringify(toSave));
-				}
-			}
-
 			function print () {
 				let c = current == total - 1 ? total : current + 1;
 				document.querySelector(".indicator .current").innerText = c;
@@ -113,5 +105,15 @@
 					errors: 0,
 					total: total
 				};
+			}
+		};
+
+		Indicator.removeIndicator = function (dictionaryId) {
+			let data = localStorage.getItem(indicatorKey);
+			if (data !== null) {
+				let toSave = JSON.parse(data).filter(i => i.dictionaryId != dictionaryId);
+				if (toSave.length != 0) {
+					localStorage.setItem(indicatorKey, JSON.stringify(toSave));
+				} else localStorage.removeItem(indicatorKey);
 			}
 		}

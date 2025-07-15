@@ -315,13 +315,11 @@
 			}
 
 			function removeIndicator (dictionaryId) {
-				let indicator = new Indicator(dictionaryId);
-				indicator.removeIndicator(dictionaryId);
+				Indicator.removeIndicator(dictionaryId);
 			}
 
 			function removeErrorsIndicator (dictionaryId) {
-				let errorsIndicator = new ErrorsIndicator(dictionaryId);
-				errorsIndicator.removeErrorsIndicator();
+				ErrorsIndicator.removeErrorsIndicator(dictionaryId);
 			}
 
 			function showPleaseSelectDictionary () {

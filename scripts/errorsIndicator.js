@@ -21,10 +21,6 @@
 				return errorsIndicator;
 			}
 
-			this.removeErrorsIndicator = function () {
-				remove();
-			}
-
 			function createErrorsIndicator () {
 				let errorsIndicator = [];
 				for (let i = 0; i < dictionary.length; i++) {
@@ -70,10 +66,14 @@
 			    filtered.push({ dictionaryId, errorsIndicator });
 			    localStorage.setItem(errorsKey, JSON.stringify(filtered));
 			}
+		}
 
-			function remove () {
-			    let list = JSON.parse(localStorage.getItem(errorsKey)) || [];
-			    let filtered = list.filter(i => i.dictionaryId !== dictionaryId);
-			    localStorage.setItem(errorsKey, JSON.stringify(filtered));
-			}
+		ErrorsIndicator.removeErrorsIndicator = function (dictionaryId) {
+		    let list = JSON.parse(localStorage.getItem(errorsKey)) || [];
+		    let filtered = list.filter(i => i.dictionaryId !== dictionaryId);
+		    if (filtered.length !== 0) {
+		    	localStorage.setItem(errorsKey, JSON.stringify(filtered));
+		    } else {
+		    	localStorage.removeItem(errorsKey);
+		    }
 		}
