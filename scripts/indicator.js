@@ -7,13 +7,23 @@
 
 			this.incrementCurrent = function () {
 				if (current == total - 1) {
-					refresh();
+					current = 0;
 				} else {
 					current++;
-					saveIndicator();
 				}
+				saveIndicator();
 				print();
 			};
+
+			this.decrementCurrent = function () {
+				if (current == 0) {
+					current = total - 1;
+				} else {
+					current--;
+				}
+				saveIndicator();
+				print();
+			}
 
 			this.getIndicatorData = function () {
 				return {
@@ -34,10 +44,6 @@
 					errorsIndicator.getErrorsIndicator().filter(i => i > 0).length;
 
 				document.querySelector(".indicator .total-count").innerText = total;
-			}
-
-			function refresh () {
-				current = 0;
 			}
 
 			function getDictionaryLength (dictionaryId) {

@@ -63,8 +63,17 @@
 		padding-top: 26px;
 	}
 
-	.navigation-wrapper .next-btn {
+	.navigation-wrapper .next-btn,
+	.navigation-wrapper .prev-btn {
 		font-size: 40px;
+	}
+
+	#next_nav {
+		text-align: right;
+	}
+	
+	#prev_nav {
+		text-align: left;
 	}
 
 	#show-hint {

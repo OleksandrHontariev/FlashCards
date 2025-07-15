@@ -15,7 +15,7 @@
 			let sentenceExampleColumn = dictionaryKeys[sentenceExampleIndex];
 			let sentenceTranslationColumn = dictionaryKeys[sentenceTranslationIndex];
 
-			createNextButton();
+			createNavigation();
 			document.getElementById("show-hint").addEventListener("click", function () {
 				let current = indicator.getIndicatorData().current;
 				let hint = dictionary[current][sentenceExampleColumn];
@@ -31,6 +31,12 @@
 
 			function nextHandler () {
 				indicator.incrementCurrent();
+				let current = indicator.getIndicatorData().current;
+				setCard(current);
+			}
+
+			function prevHandler () {
+				indicator.decrementCurrent();
 				let current = indicator.getIndicatorData().current;
 				setCard(current);
 			}
@@ -140,18 +146,47 @@
 				}
 			}
 
-			function createNextButton () {
+			function createNavigation () {
+				let prevNavPlace = document.getElementById("prev_nav");
+				let nextNavPlace = document.getElementById("next_nav");
+
 				// clear old button
-				document.querySelector(".navigation-wrapper").innerHTML = "";
-				let nextBtn = document.createElement("button");
-				nextBtn.id = "next_btn";
-				nextBtn.type = "button";
-				nextBtn.classList.add("btn", "btn-large", "bg-transparent", "next-btn");
+				prevNavPlace.innerHTML = "";
+				nextNavPlace.innerHTML = "";
+
+				// next button
+				let nextBtn = createNavigationButton(
+					"next_btn",
+					["btn", "btn-large", "bg-transparent", "next-btn"],
+					["bi", "bi-arrow-right-circle"],
+					nextHandler);
+				nextNavPlace.appendChild(nextBtn);
+
+				// prev button
+				let prevBtn = createNavigationButton(
+					"prev_btn",
+					["btn", "btn-large", "bg-transparent", "prev-btn"],
+					["bi", "bi-arrow-left-circle"],
+					prevHandler);
+
+				prevNavPlace.appendChild(prevBtn);
+			}
+
+			function createNavigationButton (id, btnClasses, iClasses, handler) {
+				let button = document.createElement("button");
+				button.id = id;
+				button.type = "button";
+				if (btnClasses && btnClasses.length > 0) {
+					button.classList.add(...btnClasses);	
+				}
 
 				let i = document.createElement("i");
-				i.classList.add("bi", "bi-arrow-right-circle");
-				nextBtn.appendChild(i);
-				nextBtn.addEventListener("click", nextHandler);
-				document.querySelector(".navigation-wrapper").appendChild(nextBtn);
+				if (iClasses && iClasses.length > 0) {
+					i.classList.add(...iClasses);
+				}
+				button.appendChild(i);
+				button.addEventListener("click", handler);
+
+				return button;
 			}
 		}
