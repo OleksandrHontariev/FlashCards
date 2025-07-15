@@ -10,26 +10,24 @@
 				let id = alertRename.querySelector(".dictionary-id").value;
 				let friendlyName = alertRename.querySelector(".dictionary-name").value;
 				self.refreshDictionaryList(id, friendlyName);
-				self.printDictionaryList();
+				renameDictionaryFromSidebar(id, friendlyName);
+
 				hideModal(alertRename);
 			});
 
 			alertRemove.querySelector(".btn-remove").addEventListener("click", function () {
 				let id = alertRemove.querySelector(".dictionary-id").value;
 				
-				self.removeDictionary(id);
+				DictionaryStorage.removeDictionary(id);
 				self.removeDictionaryFromList(id);
 
 				removeIndicator(id);
 				removeErrorsIndicator(id);
-				
 
-				if (isActiveDictionary(id)) {
+				document.querySelector(`.item-${id}`).remove();
+
+				if (id === getActiveDictionary())
 					showPleaseSelectDictionary();
-					self.printDictionaryList(getActiveDictionaryId());
-				} else {
-					self.printDictionaryList();
-				}
 
 				hideModal(alertRemove);
 			});
@@ -93,6 +91,12 @@
 				}
 			}
 
+			this.addDictionaryToSidebar = function (dictionaryId, friendlyName) {
+				let ul = document.querySelector(".dict-list");
+				let li = createDictionaryListItem(friendlyName, dictionaryId);
+				ul.appendChild(li);
+			}
+
 			this.printDictionaryList = function (dictionaryId) {
 				// clear old list
 				document.querySelector(".dict-list").innerHTML = "";
@@ -107,22 +111,21 @@
 				}
 			};
 
-			this.removeDictionary = function (id) {
-				localStorage.removeItem(id);
-			}
-
 			this.generateDictionaryId = function () {
 				return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 5);	
 			}
 
-			function isActiveDictionary (dictionaryId) {
-				let a = document.querySelector(".sidebar-item.active");
-				return a?.dataset.id === dictionaryId;
+			function renameDictionaryFromSidebar (dictionaryId, friendlyName) {
+				let li = document.querySelector(`.item-${dictionaryId}`);
+				li.querySelector(".sidebar-item span").innerText = friendlyName;
 			}
 
-			function getActiveDictionaryId () {
-				let a = document.querySelector(".sidebar-item.active");
-				return a?.dataset.id;
+			function setActiveDictionary (dictionaryId) {
+				localStorage.setItem(activeKey, dictionaryId);
+			}
+
+			function getActiveDictionary () {
+				return localStorage.getItem(activeKey);
 			}
 
 			function downloadDictionary (id) {
@@ -157,9 +160,10 @@
 				}
 			}
 
-			function createDictionaryListItem (dictionaryName, id, activeDictionaryId) {
-				let html = `
-					<li>
+			function createDictionaryListItem (dictionaryName, id) {
+					let html =
+`
+					<li class="item-${id}">
 						<div data-id="${id}" class="d-flex align-items-center position-relative sidebar-item mb-2">
 							<span class="a-text text-truncate flex-grow-1">
 								${dictionaryName}
@@ -206,15 +210,12 @@
 				let li = doc.querySelector("li");
 
 				let a = li.querySelector(".sidebar-item");
-				if (activeDictionaryId && a.dataset.id === activeDictionaryId) {
-					a.classList.add("active");
-				}
-
 				a.addEventListener("click", function (e) {
 					clearActiveLink();
 					this.classList.add("active");
 					self.hidePleaseSelectDictionary();
 					let dId = this.dataset.id;
+					setActiveDictionary(dId);
 					let errorsIndicator = new ErrorsIndicator(dId);
 					indicator = new Indicator({
 						dictionaryId: dId,
@@ -331,4 +332,8 @@
 				document.querySelector(".app-section").classList.remove("d-none");
 				document.querySelector(".dictionary-preview").classList.add("d-none");
 			}
+		}
+
+		DictionaryStorage.removeDictionary = function (dictionaryId) {
+			localStorage.removeItem(dictionaryId);
 		}

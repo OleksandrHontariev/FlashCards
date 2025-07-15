@@ -53,7 +53,6 @@
 	}
 
 	.sidebar-item:hover .sidebar-btn,
-	.sidebar-item.active .sidebar-btn,
 	.btn_click_active .sidebar-btn {
 	  display: block;
 	}

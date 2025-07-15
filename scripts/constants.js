@@ -2,6 +2,7 @@
 		const indicatorKey = "indicator_list";
 		const errorsKey = "errors_list";
 		const errorCountPerWord = 3;
+		const activeKey = "active_dictionary";
 		const answerBtnsHtml = `
 							<div>
 								<div class="row">
