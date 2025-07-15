@@ -368,3 +368,42 @@
 					});
 			}
 		}
+
+		DictionaryStorage.printLocalStorageSizeUsed = function () {
+			let size = getLocalStorageSize();
+			document.getElementById("storage_used").innerText = size;
+
+			function getLocalStorageSize() {
+			  let total = 0;
+			  for (let key in localStorage) {
+			    if (localStorage.hasOwnProperty(key)) {
+			      let value = localStorage.getItem(key);
+			      if (value) {
+			      	total += key.length + value.length;
+			      }
+			    }
+			  }
+			  return (total / (1024 * 1024)).toFixed(2);
+			}
+		}
+
+		DictionaryStorage.initLocalStorageHooks = function () {
+			  const originalSetItem = localStorage.setItem;
+			  const originalRemoveItem = localStorage.removeItem;
+			  const originalClear = localStorage.clear;
+
+			  localStorage.setItem = function () {
+			    originalSetItem.apply(this, arguments);
+			    DictionaryStorage.printLocalStorageSizeUsed();
+			  };
+
+			  localStorage.removeItem = function () {
+			    originalRemoveItem.apply(this, arguments);
+			    DictionaryStorage.printLocalStorageSizeUsed();
+			  };
+
+			  localStorage.clear = function () {
+			    originalClear.apply(this, arguments);
+			    DictionaryStorage.printLocalStorageSizeUsed();
+			  };
+		}

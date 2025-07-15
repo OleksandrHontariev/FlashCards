@@ -1,5 +1,8 @@
+		
+		DictionaryStorage.initLocalStorageHooks();
 
 		document.addEventListener("DOMContentLoaded", function () {
+			DictionaryStorage.printLocalStorageSizeUsed();
 			let ds = new DictionaryStorage();
 			ds.printDictionaryList(DictionaryStorage.getActiveDictionary());
 			DictionaryStorage.initActiveDictionary();
