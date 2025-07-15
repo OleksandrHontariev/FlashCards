@@ -55,7 +55,7 @@
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Pure HTML, CSS, JavaScript (no frameworks)  
+- **Frontend**: Bootstrap 5.3, native JavaScript  
 - **Storage**: Browser `localStorage`  
 - **Hosting**: Static site (no server-side code)  
 
