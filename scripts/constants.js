@@ -22,3 +22,7 @@
 									</div>
 								</div>
 							</div>`;
+		const dictionaryEditorHtml =
+		`<div id="dictionary_editor">
+			<div class="container-fluid"></div>
+		</div>`;

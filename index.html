@@ -6,9 +6,28 @@
 	<title>Карточки английского</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/styles/handsontable.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/styles/ht-theme-main.min.css">
 	<link href="style.css" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column">
+		<div class="dictionary-editor-modal d-none">
+			<div id="main_container">
+			    <div id="dictionary_editor"></div>
+			    <div id="action_bar">
+			    	<div class="container-fluid">
+			    		<div class="row">
+			    			<div class="col-12">
+			    				<div class="text-end" id="d-editor-btns">
+			    					<button class="btn btn-secondary btn-sm">Отмена</button>
+			    					<button class="btn btn-success btn-sm">Сохранить</button>
+			    				</div>
+			    			</div>
+			    		</div>
+			    	</div>
+			    </div>
+			</div>
+		</div>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
 		    <div class="container">
 		        <!-- Логотип -->
@@ -166,10 +185,12 @@
 	</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
 	<script src="scripts/constants.js"></script>
 	<script src="scripts/errorsIndicator.js"></script>
 	<script src="scripts/indicator.js"></script>
 	<script src="scripts/cardMaker.js"></script>
+	<script src="scripts/dictionaryEditor.js"></script>
 	<script src="scripts/dictionaryStorage.js"></script>
 	<script src="scripts/app.js"></script>
 	<script>

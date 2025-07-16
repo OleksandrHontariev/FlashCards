@@ -109,3 +109,34 @@
 	#word_visualizer .word-current {
 		background: #FFC107;
 	}
+
+	.dictionary-editor-modal {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    height: 100%;
+	    z-index: 2;
+	    background: #fff;
+	}
+
+	#main_container {
+	    display: flex;
+	    flex-direction: column;
+	    height: 100vh;
+	}
+
+	#dictionary_editor {
+	    flex: 1;
+	    overflow-y: auto;
+	}
+
+	#action_bar {
+	    height: 63px;
+	    display: flex;
+	    justify-content: flex-end;
+	    align-items: center;
+	    padding: 0 12px;
+	    border-top: 1px solid #DEE2E6;
+	}

@@ -21,8 +21,8 @@
 				DictionaryStorage.removeDictionary(id);
 				self.removeDictionaryFromList(id);
 
-				removeIndicator(id);
-				removeErrorsIndicator(id);
+				Indicator.removeIndicator(id);
+				ErrorsIndicator.removeErrorsIndicator(id);
 
 				document.querySelector(`.item-${id}`).remove();
 
@@ -178,7 +178,7 @@
 						      		</a>
 						      	</li>
 						        <li>
-						        	<a class="dropdown-item" href="#">
+						        	<a data-id="${id}" class="dropdown-item lnk-edit" href="#">
 						        		<i class="bi bi-pencil-square"></i>&nbsp;
 						        		Редактировать
 						        	</a>
@@ -214,7 +214,7 @@
 
 					let errorsIndicator = new ErrorsIndicator(dId);
 
-					indicator = new Indicator({
+					let indicator = new Indicator({
 						dictionaryId: dId,
 						errorsIndicator: errorsIndicator
 					});
@@ -254,6 +254,15 @@
 									.querySelector(".a-text").innerText;
 
 					showRenameDictionaryModal(id, oldName);
+				});
+
+				let lnkEdit = li.querySelector(".lnk-edit");
+				lnkEdit.addEventListener("click", function (e) {
+					e.preventDefault();
+					e.stopPropagation();
+					let dropdown = bootstrap.Dropdown.getOrCreateInstance(this.parentElement.parentElement);
+					dropdown.hide();
+					new DictionaryEditor(this.dataset.id, dictionarySavedHandler);
 				});
 
 				let lnkDownload = li.querySelector(".lnk-download");
@@ -308,16 +317,17 @@
 				modal.show();
 			}
 
+			function dictionarySavedHandler (dictionaryId) {
+				Indicator.removeIndicator(dictionaryId);
+				ErrorsIndicator.removeErrorsIndicator(dictionaryId);
+
+				if (dictionaryId === DictionaryStorage.getActiveDictionary()) {
+					DictionaryStorage.initActiveDictionary();
+				}
+			}
+
 			function hideModal (modal) {
 				bootstrap.Modal.getOrCreateInstance(modal).hide();
-			}
-
-			function removeIndicator (dictionaryId) {
-				Indicator.removeIndicator(dictionaryId);
-			}
-
-			function removeErrorsIndicator (dictionaryId) {
-				ErrorsIndicator.removeErrorsIndicator(dictionaryId);
 			}
 		}
 
