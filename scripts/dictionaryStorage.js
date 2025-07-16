@@ -211,7 +211,9 @@
 					DictionaryStorage.hidePleaseSelectDictionary();
 					let dId = this.dataset.id;
 					DictionaryStorage.setActiveDictionary(dId);
+
 					let errorsIndicator = new ErrorsIndicator(dId);
+
 					indicator = new Indicator({
 						dictionaryId: dId,
 						errorsIndicator: errorsIndicator

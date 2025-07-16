@@ -84,3 +84,28 @@
 	#show-hint i {
 		font-size: 24px;
 	}
+
+	#word_visualizer:after {
+	    content: "";
+	    display: table;
+	    clear: both;
+	}
+	#word_visualizer div {
+		float: left;
+		width: 14px;
+		height: 4px;
+		margin: 2px 2px 0 0;
+		background: #EAEAEA;
+	}
+
+	#word_visualizer .word-error {
+		background: #DC3545;
+	}
+
+	#word_visualizer .word-success {
+		background: #198754;
+	}
+
+	#word_visualizer .word-current {
+		background: #FFC107;
+	}

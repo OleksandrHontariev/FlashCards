@@ -1,6 +1,8 @@
 		function ErrorsIndicator (dictionaryId) {
 			let dictionary = getDictionary();
 			let errorsIndicator = get();
+			let visualizerContainer = document.getElementById("word_visualizer");
+			createVisualizer();
 
 			this.indicate = function (current, success) {
 				let value = errorsIndicator[current];
@@ -19,6 +21,48 @@
 
 			this.getErrorsIndicator = function () {
 				return errorsIndicator;
+			}
+
+			this.reviewVisualizer = function () {
+				let divs = visualizerContainer.querySelectorAll("div");
+				errorsIndicator.forEach((e, i) => {
+					// clear
+					divs[i].classList.remove("word-success");
+					divs[i].classList.remove("word-error");
+
+					if (e === 0) {
+						divs[i].classList.add("word-success");
+					} else if (e > 0) {
+						divs[i].classList.add("word-error");
+					}
+				});
+			}
+
+			this.setCurrentWord = function (current) {
+				// clear
+				visualizerContainer.querySelectorAll("div").forEach ((div) =>  {
+					div.classList.remove("word-current");
+				});
+
+				visualizerContainer.querySelectorAll("div").forEach ((div, index) =>  {
+					if (index === current) {
+						div.classList.add("word-current");
+					}
+				});
+			}
+
+			function createVisualizer () {
+				visualizerContainer.innerHTML = "";
+
+				errorsIndicator.forEach((e, i) => {
+					let div = document.createElement("div");
+					if (e === 0) {
+						div.classList.add("word-success");
+					} else if (e > 0) {
+						div.classList.add("word-error");
+					}
+					visualizerContainer.appendChild(div);
+				});
 			}
 
 			function createErrorsIndicator () {
@@ -77,4 +121,5 @@
 		    } else {
 		    	localStorage.removeItem(errorsKey);
 		    }
+		    document.getElementById("word_visualizer").innerHTML = "";
 		}

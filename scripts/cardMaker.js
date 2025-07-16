@@ -27,18 +27,21 @@
 				modal.show();
 			});
 
+			errorsIndicator.setCurrentWord(indicator.getIndicatorData().current);
 			setCard(indicator.getIndicatorData().current);
 
 			function nextHandler () {
 				indicator.incrementCurrent();
-				let current = indicator.getIndicatorData().current;
-				setCard(current);
+				errorsIndicator.reviewVisualizer();
+				errorsIndicator.setCurrentWord(indicator.getIndicatorData().current);
+				setCard(indicator.getIndicatorData().current);
 			}
 
 			function prevHandler () {
 				indicator.decrementCurrent();
-				let current = indicator.getIndicatorData().current;
-				setCard(current);
+				errorsIndicator.reviewVisualizer();
+				errorsIndicator.setCurrentWord(indicator.getIndicatorData().current);
+				setCard(indicator.getIndicatorData().current);
 			}
 
 			function setCard (current) {
