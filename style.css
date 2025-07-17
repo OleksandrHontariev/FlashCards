@@ -140,3 +140,23 @@
 	    padding: 0 12px;
 	    border-top: 1px solid #DEE2E6;
 	}
+
+#create_headers_modal .modal-header .flex-grow-1 {
+	flex-grow: 1;
+	margin-right: 6px;
+}
+
+#create_dictionary_title {
+	line-height: 31px;
+	cursor: pointer;
+}
+
+#create_headers_modal .columns-list-title-input {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#columns_list .column-title {
+	cursor: pointer;
+}

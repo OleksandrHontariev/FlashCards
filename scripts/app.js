@@ -28,10 +28,9 @@
 
 				    // Конвертируем лист в JSON
 				    const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
-				    let dictionaryId = ds.generateDictionaryId();
+				    let dictionaryId = DictionaryStorage.generateDictionaryId();
 				    let dictionaryName = file.name.split(".")[0];
 				    ds.saveDictionary(dictionaryId, jsonData, dictionaryName);
-				    // ds.printDictionaryList();
 				    ds.addDictionaryToSidebar(dictionaryId, dictionaryName);
 				    document.getElementById("load_excel").value = '';
 				    endLoadingFile();

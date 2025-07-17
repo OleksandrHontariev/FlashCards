@@ -114,10 +114,6 @@
 				}
 			};
 
-			this.generateDictionaryId = function () {
-				return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 5);	
-			}
-
 			function renameDictionaryFromSidebar (dictionaryId, friendlyName) {
 				let li = document.querySelector(`.item-${dictionaryId}`);
 				li.querySelector(".sidebar-item span").innerText = friendlyName;
@@ -418,4 +414,8 @@
 			    originalClear.apply(this, arguments);
 			    DictionaryStorage.printLocalStorageSizeUsed();
 			  };
+		}
+
+		DictionaryStorage.generateDictionaryId = function () {
+			return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 5);	
 		}
