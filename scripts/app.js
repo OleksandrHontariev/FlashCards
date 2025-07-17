@@ -11,6 +11,10 @@
 				document.getElementById("load_excel").click();	
 			});
 
+			document.getElementById("create_dictionary_btn").addEventListener("click", function () {
+				new DictionaryCreator();
+			});
+
 			document.getElementById("load_excel").addEventListener("change", function (e) {
 				startLoadingFile();
 				const file = e.target.files[0];
